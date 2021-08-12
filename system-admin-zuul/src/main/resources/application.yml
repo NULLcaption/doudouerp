@@ -1,0 +1,42 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eurka-server/eureka/
+spring:
+  application:
+    name: system-admin-zuul
+  datasource:
+    name: test
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/bootdotest?useUnicode=true&characterEncoding=utf8
+    username: root
+    password:
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    mybatis:
+      type-aliases-package:  domain
+server:
+  port: 9003
+zuul:
+  host:
+    connect-timeout-millis: 3000
+    socket-timeout-millis: 3000
+  routes:
+    api-ribbon:
+      path: /api-a/**
+      service-id: system-admin-ribbon
+    api-feign:
+      path: /api-b/**
+      service-id: system-admin-feign

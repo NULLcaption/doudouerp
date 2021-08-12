@@ -1,0 +1,34 @@
+# 远程连接配置
+# 注意一：在spring could config client中，由于F版禁用了bootstrap，所以启动时会报错，需要在maven中加入该依赖
+# 注意二：在spring could config client基本配置中，需要将spring could config client配置在bootstrap.yml中
+# 否则启动找不到spring could config server配置的端口
+# 原因：因为bootstrap.properties的相关配置会先于application.yml，
+# 而bootstrap.yml的加载也是先于application.yml
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      label: master  #指明远程仓库的分支
+      profile: dev  #dev开发环境配置文件;test测试环境;pro正式环境
+#      uri: http://localhost:9100/ #指明配置服务中心的网址
+      name: config-client # 获取配置文件的名称
+    bus:
+      ack:
+        enabled: true
+      trace:
+        enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh
+  endpoint:
+    bus-refresh:
+      enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eurka-server/eureka/

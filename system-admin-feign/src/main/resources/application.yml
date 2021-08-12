@@ -1,0 +1,36 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eurka-server/eureka/
+server:
+  port: 9002
+#  servlet:
+#    context-path: /system-admin-feign
+feign:
+  hystrix:
+    enabled: true
+spring:
+  application:
+    name: system-admin-feign
+  datasource:
+    name: test
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/bootdotest?useUnicode=true&characterEncoding=utf8
+    username: root
+    password:
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    mybatis:
+      type-aliases-package:  domain
